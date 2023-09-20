@@ -102,4 +102,10 @@ def improved_interpolation(raw_img):
                 else:
                     res[i, j, k] = raw_img[i, j, k]
     return np.clip(res, 0, 255).astype(np.uint8)
-            
+
+def compute_psnr(img_pred, img_gt):
+    img_pred = img_pred.astype(np.float64)
+    img_gt = img_gt.astype(np.float64)
+    if np.mean((img_pred-img_gt)**2) == 0:
+        raise ValueError
+    return 10 * np.log((np.max(img_gt)**2)/(np.mean((img_pred-img_gt)**2)))/np.log(10)
